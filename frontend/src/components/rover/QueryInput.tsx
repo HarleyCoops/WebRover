@@ -1,5 +1,3 @@
-import { Button } from '../ui/Button';
-import { useRef, useState } from 'react';
 
 interface QueryInputProps {
   value: string;
@@ -9,16 +7,6 @@ interface QueryInputProps {
 }
 
 export function QueryInput({ value, onChange, onSubmit, isLoading }: QueryInputProps) {
-  const inputRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!inputRef.current) return;
-    const rect = inputRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
   return (
     <div className="relative flex items-center w-full">
       <input

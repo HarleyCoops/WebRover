@@ -8,12 +8,14 @@ export function ParticlesBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    const canvasElement = canvas;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvasElement.getContext('2d');
     if (!ctx) return;
+    const context = ctx;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvasElement.width = window.innerWidth;
+    canvasElement.height = window.innerHeight;
 
     const particles: Array<{
       x: number;
@@ -26,8 +28,8 @@ export function ParticlesBackground() {
 
     for (let i = 0; i < 50; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * canvasElement.width,
+        y: Math.random() * canvasElement.height,
         size: Math.random() * 2,
         speedX: (Math.random() - 0.5) * 0.5,
         speedY: (Math.random() - 0.5) * 0.5,
@@ -36,21 +38,21 @@ export function ParticlesBackground() {
     }
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      context.clearRect(0, 0, canvasElement.width, canvasElement.height);
       
       particles.forEach(particle => {
         particle.x += particle.speedX;
         particle.y += particle.speedY;
         
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.y > canvas.height) particle.y = 0;
-        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.x > canvasElement.width) particle.x = 0;
+        if (particle.x < 0) particle.x = canvasElement.width;
+        if (particle.y > canvasElement.height) particle.y = 0;
+        if (particle.y < 0) particle.y = canvasElement.height;
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(147, 197, 253, ${particle.opacity})`;
-        ctx.fill();
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        context.fillStyle = `rgba(147, 197, 253, ${particle.opacity})`;
+        context.fill();
       });
 
       requestAnimationFrame(animate);
@@ -59,8 +61,8 @@ export function ParticlesBackground() {
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvasElement.width = window.innerWidth;
+      canvasElement.height = window.innerHeight;
     };
 
     window.addEventListener('resize', handleResize);
@@ -73,4 +75,4 @@ export function ParticlesBackground() {
       className="fixed inset-0 pointer-events-none z-0"
     />
   );
-} 
+}
