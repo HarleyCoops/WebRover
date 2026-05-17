@@ -2,6 +2,7 @@ import { SpotlightCard } from '@/components/ui/SpotlightCard';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import type { CSSProperties } from 'react';
 import remarkGfm from 'remark-gfm';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -82,15 +83,14 @@ export function ResponseDisplay({ messages }: ResponseDisplayProps) {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    code({ node, inline, className, children, ...props }) {
+                    code({ className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || '');
-                      return !inline && match ? (
+                      return match ? (
                         <SyntaxHighlighter
-                          style={oneDark}
+                          style={oneDark as unknown as { [key: string]: CSSProperties }}
                           language={match[1]}
                           PreTag="div"
                           className="rounded-lg border border-zinc-700/50 !bg-zinc-900/50 !my-4"
-                          {...props}
                         >
                           {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
